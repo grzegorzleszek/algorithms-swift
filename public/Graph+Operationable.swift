@@ -1,5 +1,5 @@
 //
-//  graphTest.swift
+//  Graph+Operations.swift
 //
 //  Copyright © 2015 Grzegorz.Leszek. All rights reserved.
 //
@@ -9,10 +9,10 @@
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-//
+// 
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-//
+// 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,24 +21,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import XCTest
+import Foundation
 
-class graphTest: XCTestCase {
-    
-    func testGraphCreation() {
-        var G = Graph()
-        XCTAssert(G.edges.count == 0)
-        XCTAssert(G.vertices.count == 0)
-        
-        let a = Vertex(id: 0)
-        let b = Vertex(id: 0)
-        let ab = Edge(id: 0, left: a, right: b)
-        
-        G.edges = [ab]
-        G.vertices = [a,b]
-        
-        XCTAssert(G.edges.count == 1)
-        XCTAssert(G.vertices.count == 2)
+protocol Operationable {
+}
+
+extension Operationable {
+    func neighborsOf(v: Vertex, withGivenEdges edges: [Edge]) -> [Vertex] {
+        var result = [Vertex]()
+        for index in 0..<edges.count {
+            if edges[index].left.id == v.id {
+                result.append(edges[index].right)
+            } else if edges[index].right.id == v.id {
+                result.append(edges[index].left)
+            }
+        }
+        return result
     }
-    
+}
+
+extension Graph: Operationable {
 }
