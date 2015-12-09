@@ -32,50 +32,55 @@ class GraphOperationableTests: XCTestCase {
         graph = Graph()
     }
     
-    func test_singleVertexGraph_shouldHaveNoNeighbors() {
-        generateSingleVertexGraph()
-        let neighbors = graph.neighborsOf(Vertex(id: 1), withGivenEdges: graph.edges)
+    // MARK: - neighborsOf v withGiven edges
+    
+    func test_neighborsOfVWithGivenEdges_shouldHaveNoNeighbors_whenIsSingleVertexGraph() {
+        let a = Vertex(id: 1)
+        let neighbors = graph.neighborsOf(a, withGiven: [])
         XCTAssert(neighbors.count == 0)
     }
     
-    func test_singleVertexGraph_shouldHaveNoNeighbors_whenProvideUnrelatedEdge() {
+    func test_neighborsOfVWithGivenEdges_shouldHaveNoNeighbors_whenSingleVertexGraph_andProvideUnrelatedEdge() {
         let a = Vertex(id: 1)
         let b = Vertex(id: 2)
         let c = Vertex(id: 3)
         let ab = Edge(id: 1, left: a, right: b)
-        let neighbors = graph.neighborsOf(c, withGivenEdges: [ab])
+        let neighbors = graph.neighborsOf(c, withGiven: [ab])
         XCTAssert(neighbors.count == 0)
     }
     
-    func test_singleEdgeGraph_shouldHaveOneNeighbor_whenFirstVertexUsedAsParameter() {
-        generateSingleEdgeGraph()
-        let neighbors = graph.neighborsOf(Vertex(id: 1), withGivenEdges: graph.edges)
-        XCTAssert(neighbors.count == 1)
-    }
-    
-    func test_singleEdgeGraph_shouldHaveOneNeighbor_whenSecondVertexUsedAsParameter() {
-        generateSingleEdgeGraph()
-        let neighbors = graph.neighborsOf(Vertex(id: 2), withGivenEdges: graph.edges)
-        XCTAssert(neighbors.count == 1)
-    }
-    
-    // MARK: - Helpers
-    
-    func generateSingleVertexGraph() {
-        var G = Graph()
-        let a = Vertex(id: 1)
-        G.edges = []
-        G.vertices = [a]
-        self.graph = G
-    }
-    
-    func generateSingleEdgeGraph() {
-        var G = Graph()
+    func test_neighborsOfVWithGivenEdges_shouldHaveOneNeighbor_whenSingleEdgeGraph_andFirstVertexUsedAsParameter() {
         let a = Vertex(id: 1)
         let b = Vertex(id: 2)
         let ab = Edge(id: 1, left: a, right: b)
-        G.edges = [ab]
-        G.vertices = [a,b]
-        self.graph = G
+        let neighbors = graph.neighborsOf(a, withGiven: [ab])
+        XCTAssert(neighbors.count == 1)
+    }
+    
+    func test_neighborsOfVWithGivenEdges_shouldHaveOneNeighbor_whenSingleEdgeGraph_andSecondVertexUsedAsParameter() {
+        let a = Vertex(id: 1)
+        let b = Vertex(id: 2)
+        let ab = Edge(id: 1, left: a, right: b)
+        let neighbors = graph.neighborsOf(b, withGiven: [ab])
+        XCTAssert(neighbors.count == 1)
+    }
+    
+    // MARK: - contain v onArray vertices
+    
+    func test_containVOnArrayVertices_shouldNotContainVertex() {
+        let a = Vertex(id: 1)
+        let b = Vertex(id: 2)
+        let c = Vertex(id: 3)
+        XCTAssertFalse(graph.contain(a, onArray: []))
+        XCTAssertFalse(graph.contain(a, onArray: [b,c]))
+    }
+    
+    func test_containVOnArrayVertices_shouldContainVertex() {
+        let a = Vertex(id: 1)
+        let b = Vertex(id: 2)
+        let c = Vertex(id: 3)
+        XCTAssertTrue(graph.contain(a, onArray: [a]))
+        XCTAssertTrue(graph.contain(a, onArray: [a,b,c]))
+        XCTAssertTrue(graph.contain(a, onArray: [c,b,a]))
     }
 }

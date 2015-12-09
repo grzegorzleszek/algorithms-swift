@@ -27,7 +27,8 @@ protocol Operationable {
 }
 
 extension Operationable {
-    func neighborsOf(v: Vertex, withGivenEdges edges: [Edge]) -> [Vertex] {
+    
+    func neighborsOf(v: Vertex, withGiven edges: [Edge]) -> [Vertex] {
         var result = [Vertex]()
         for index in 0..<edges.count {
             if edges[index].left.id == v.id {
@@ -38,6 +39,16 @@ extension Operationable {
         }
         return result
     }
+    
+    func contain(v: Vertex, onArray vertices: [Vertex]) -> Bool {
+        for i in 0..<vertices.count {
+            if vertices[i].id == v.id  {
+                return true;
+            }
+        }
+        return false
+    }
+    
 }
 
 extension Graph: Operationable {
