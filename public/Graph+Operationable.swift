@@ -49,6 +49,14 @@ extension Operationable {
         return false
     }
     
+    func bringVertexToFront(v: Vertex, vertices: [Vertex]) -> [Vertex] {
+        var vertexArray = vertices
+        let index  = vertices.indexOf({$0.id == v.id})
+        vertexArray.removeAtIndex(index!)
+        vertexArray.insert(v, atIndex: 0)
+        return vertexArray
+    }
+
 }
 
 extension Graph: Operationable {

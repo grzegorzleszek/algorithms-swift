@@ -83,4 +83,52 @@ class GraphOperationableTests: XCTestCase {
         XCTAssertTrue(graph.contain(a, onArray: [a,b,c]))
         XCTAssertTrue(graph.contain(a, onArray: [c,b,a]))
     }
+    
+    // MARK: - contain v onArray vertices
+    
+    func test_bringVertexToFront_shouldDoNothing_whenGivenOneVertex() {
+        let a = Vertex(id: 1)
+        let array = graph.bringVertexToFront(a, vertices: [a])
+        if let first = array.first {
+            XCTAssertTrue(first == a)
+        } else {
+            XCTAssert(false)
+        }
+    }
+    
+    func test_bringVertexToFront_shouldBringLastElementToFront_whenGivenThreeVertices() {
+        let a = Vertex(id: 1)
+        let b = Vertex(id: 2)
+        let c = Vertex(id: 3)
+        let array = graph.bringVertexToFront(c, vertices: [a, b, c])
+        if let first = array.first {
+            XCTAssertTrue(first == c)
+        } else {
+            XCTAssert(false)
+        }
+    }
+    
+    func test_bringVertexToFront_shouldBringMiddleElementToFront_whenGivenThreeVertices() {
+        let a = Vertex(id: 1)
+        let b = Vertex(id: 2)
+        let c = Vertex(id: 3)
+        let array = graph.bringVertexToFront(b, vertices: [a, b, c])
+        if let first = array.first {
+            XCTAssertTrue(first == b)
+        } else {
+            XCTAssert(false)
+        }
+    }
+    
+    func test_bringVertexToFront_shouldDoNothing_whenVertexIsInTheFrontAlready() {
+        let a = Vertex(id: 1)
+        let b = Vertex(id: 2)
+        let c = Vertex(id: 3)
+        let array = graph.bringVertexToFront(a, vertices: [a, b, c])
+        if let first = array.first {
+            XCTAssertTrue(first == a)
+        } else {
+            XCTAssert(false)
+        }
+    }
 }
