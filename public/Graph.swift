@@ -24,8 +24,8 @@
 import Foundation
 
 struct Graph {
-    var vertices = [Vertex]()
-    var edges = [Edge]()
+    var _vertices = [Vertex]()
+    var _edges = [Edge]()
     private var highestVertexID: Int
     private var highestEdgeID: Int
     

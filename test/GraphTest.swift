@@ -27,18 +27,18 @@ class GraphTest: XCTestCase {
     
     func testGraphCreation() {
         var G = Graph()
-        XCTAssert(G.edges.count == 0)
-        XCTAssert(G.vertices.count == 0)
+        XCTAssert(G._edges.count == 0)
+        XCTAssert(G._vertices.count == 0)
         
         let a = Vertex(id: 0)
         let b = Vertex(id: 0)
         let ab = Edge(id: 0, left: a, right: b)
         
-        G.edges = [ab]
-        G.vertices = [a,b]
+        G._edges = [ab]
+        G._vertices = [a,b]
         
-        XCTAssert(G.edges.count == 1)
-        XCTAssert(G.vertices.count == 2)
+        XCTAssert(G._edges.count == 1)
+        XCTAssert(G._vertices.count == 2)
     }
     
 }
