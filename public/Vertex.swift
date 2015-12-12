@@ -23,6 +23,10 @@
 
 import Foundation
 
+func ==(l: Vertex, r: Vertex) -> Bool {
+    return l.id == r.id
+}
+
 struct Vertex {
     let id: Int
     var weight: Int
