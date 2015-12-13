@@ -41,7 +41,7 @@ extension Graph: Traversing {
     /// 10. end.
     ///
     /// - Complexity: O(|V|+|E|), where |V| is number of vertices and |E| is number of edges.
-    func bfs(start start: Vertex, goal: Vertex, graph: Graph) -> Vertex? {
+    func bfs(start start: Vertex, goal: Vertex, graph: Graph) -> [Vertex]? {
         guard graph._vertices.count > 0
             else { return nil }
         var open = [Vertex]()
@@ -52,7 +52,8 @@ extension Graph: Traversing {
             let x = open.first!
             open.removeFirst()
             if x == goal {
-                return x
+                closed.append(x)
+                return closed
             }
             var children = neighborsOf(x, withGiven: graph._edges)
             closed.append(x)

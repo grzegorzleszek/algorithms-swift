@@ -38,27 +38,40 @@ class GraphTraversingTestsTests: XCTestCase {
         let a = Vertex(id: 1)
         graph._vertices = [a]
         if let result = graph.bfs(start: a, goal: a, graph: graph) {
-            XCTAssert(result == a)
+            XCTAssert(result[0] == a)
         } else {
             XCTAssert(false)
         }
         
     }
     
-    func test_bfs_shouldReturnSecondVertex_whenGivenTwoVertices() {
+    func test_bfs_shouldReturnCorectOrder_whenGivenTwoVertices() {
         let a = Vertex(id: 1)
         let b = Vertex(id: 2)
         let ab = Edge(id: 1, left: a, right: b)
         graph._edges = [ab]
         graph._vertices = [a, b]
         if let result = graph.bfs(start: a, goal: b, graph: graph) {
-            XCTAssert(result == b)
+            XCTAssert(result[0] == a)
+            XCTAssert(result[1] == b)
         } else {
             XCTAssert(false)
         }
     }
     
-    func test_bfs_shouldCorrectResult_whenGivenSevenVerticesGraph() {
+    func test_bfs_shouldReturnNil_whenThereIsNoPathToGoal() {
+        let a = Vertex(id: 1)
+        let b = Vertex(id: 2)
+        let c = Vertex(id: 3)
+        let ab = Edge(id: 1, left: a, right: b)
+        graph._edges = [ab]
+        graph._vertices = [a, b, c]
+        if let _ = graph.bfs(start: a, goal: c, graph: graph) {
+            XCTAssert(false)
+        }
+    }
+    
+    func test_bfs_shouldReturnCorrectOrder_whenGivenSevenVerticesGraph() {
         let a = Vertex(id: 1)
         let b = Vertex(id: 2)
         let c = Vertex(id: 3)
@@ -75,7 +88,13 @@ class GraphTraversingTestsTests: XCTestCase {
         graph._edges = [ab, ac, bd, be, cf, cg]
         graph._vertices = [a, b, c, d, e, f, g]
         if let result = graph.bfs(start: a, goal: g, graph: graph) {
-            XCTAssert(result == g)
+            XCTAssert(result[0] == a)
+            XCTAssert(result[1] == b)
+            XCTAssert(result[2] == c)
+            XCTAssert(result[3] == d)
+            XCTAssert(result[4] == e)
+            XCTAssert(result[5] == f)
+            XCTAssert(result[6] == g)
         } else {
             XCTAssert(false)
         }
