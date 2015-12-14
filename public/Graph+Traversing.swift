@@ -40,8 +40,10 @@ extension Graph: Traversing {
     /// 9.	 put the remaining descendants, in order of discovery, on the right end of open;
     /// 10. end.
     ///
+    /// - Note: If goal is not specified, bfs will return full search path.
     /// - Complexity: O(|V|+|E|), where |V| is number of vertices and |E| is number of edges.
-    func bfs(start start: Vertex, goal: Vertex, graph: Graph) -> [Vertex]? {
+    /// - Returns: Search path to goal or nil if did not reached goal.
+    func bfs(start start: Vertex, goal: Vertex? = nil, graph: Graph) -> [Vertex]? {
         guard graph._vertices.count > 0
             else { return nil }
         var open = [Vertex]()
@@ -51,9 +53,11 @@ extension Graph: Traversing {
         while open.count != 0 {
             let x = open.first!
             open.removeFirst()
-            if x == goal {
-                closed.append(x)
-                return closed
+            if let goal = goal {
+                if x == goal {
+                    closed.append(x)
+                    return closed
+                }
             }
             var children = neighborsOf(x, withGiven: graph._edges)
             closed.append(x)
@@ -65,6 +69,9 @@ extension Graph: Traversing {
             }
             open.appendContentsOf(children)
         }
-        return nil
+        if let _ = goal {
+            return nil
+        }
+        return closed
     }
 }

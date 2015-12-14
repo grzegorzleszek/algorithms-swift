@@ -71,6 +71,23 @@ class GraphTraversingTestsTests: XCTestCase {
         }
     }
     
+    func test_bfs_shouldReturnFullGraph_whenNoGoalSpecified() {
+        let a = Vertex(id: 1)
+        let b = Vertex(id: 2)
+        let c = Vertex(id: 3)
+        let ab = Edge(id: 1, left: a, right: b)
+        let ac = Edge(id: 2, left: a, right: c)
+        graph._edges = [ab, ac]
+        graph._vertices = [a, b, c]
+        if let result = graph.bfs(start: a, graph: graph) {
+            XCTAssert(result[0] == a)
+            XCTAssert(result[1] == b)
+            XCTAssert(result[2] == c)
+        } else {
+            XCTAssert(false)
+        }
+    }
+    
     func test_bfs_shouldReturnCorrectOrder_whenGivenSevenVerticesGraph() {
         let a = Vertex(id: 1)
         let b = Vertex(id: 2)
