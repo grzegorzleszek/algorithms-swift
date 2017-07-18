@@ -22,6 +22,7 @@
 // THE SOFTWARE.
 
 import XCTest
+@testable import algorithms
 
 class GraphTraversingTestsTests: XCTestCase {
     
@@ -42,7 +43,6 @@ class GraphTraversingTestsTests: XCTestCase {
         } else {
             XCTAssert(false)
         }
-        
     }
     
     func test_bfs_shouldReturnCorectOrder_whenGivenTwoVertices() {
@@ -110,6 +110,57 @@ class GraphTraversingTestsTests: XCTestCase {
             XCTAssert(result[2] == c)
             XCTAssert(result[3] == d)
             XCTAssert(result[4] == e)
+            XCTAssert(result[5] == f)
+            XCTAssert(result[6] == g)
+        } else {
+            XCTAssert(false)
+        }
+    }
+
+    // MARK: - dfs
+
+    func test_dfs_shouldReturnFullGraph_whenNoGoalSpecified() {
+        let a = Vertex(id: 1)
+        let b = Vertex(id: 2)
+        let c = Vertex(id: 3)
+        let d = Vertex(id: 4)
+        let ab = Edge(id: 1, left: a, right: b)
+        let ac = Edge(id: 2, left: a, right: c)
+        let bd = Edge(id: 3, left: b, right: d)
+        graph._edges = [ab, ac, bd]
+        graph._vertices = [a, b, c, d]
+        if let result = graph.dfs(start: a, graph: graph) {
+            XCTAssert(result[0] == a)
+            XCTAssert(result[1] == b)
+            XCTAssert(result[2] == d)
+            XCTAssert(result[3] == c)
+        } else {
+            XCTAssert(false)
+        }
+    }
+
+    func test_dfs_shouldReturnCorrectOrder_whenGivenSevenVerticesGraph() {
+        let a = Vertex(id: 1)
+        let b = Vertex(id: 2)
+        let c = Vertex(id: 3)
+        let d = Vertex(id: 4)
+        let e = Vertex(id: 5)
+        let f = Vertex(id: 6)
+        let g = Vertex(id: 7)
+        let ab = Edge(id: 1, left: a, right: b)
+        let ac = Edge(id: 2, left: a, right: c)
+        let bd = Edge(id: 3, left: b, right: d)
+        let be = Edge(id: 4, left: b, right: e)
+        let cf = Edge(id: 5, left: c, right: f)
+        let cg = Edge(id: 6, left: c, right: g)
+        graph._edges = [ab, ac, bd, be, cf, cg]
+        graph._vertices = [a, b, c, d, e, f, g]
+        if let result = graph.dfs(start: a, goal: g, graph: graph) {
+            XCTAssert(result[0] == a)
+            XCTAssert(result[1] == b)
+            XCTAssert(result[2] == d)
+            XCTAssert(result[3] == e)
+            XCTAssert(result[4] == c)
             XCTAssert(result[5] == f)
             XCTAssert(result[6] == g)
         } else {

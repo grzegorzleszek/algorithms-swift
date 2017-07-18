@@ -1,5 +1,5 @@
 //
-//  Graph+Operations.swift
+//  Graph.swift
 //
 //  Copyright © 2015 Grzegorz.Leszek. All rights reserved.
 //
@@ -23,41 +23,14 @@
 
 import Foundation
 
-protocol Operationable {
-}
-
-extension Operationable {
+struct Graph {
+    var _vertices = [Vertex]()
+    var _edges = [Edge]()
+    fileprivate var highestVertexID: Int
+    fileprivate var highestEdgeID: Int
     
-    func neighborsOf(v: Vertex, withGiven edges: [Edge]) -> [Vertex] {
-        var result = [Vertex]()
-        for index in 0..<edges.count {
-            if edges[index].left.id == v.id {
-                result.append(edges[index].right)
-            } else if edges[index].right.id == v.id {
-                result.append(edges[index].left)
-            }
-        }
-        return result
+    init() {
+        self.highestVertexID = 0
+        self.highestEdgeID = 0
     }
-    
-    func contain(v: Vertex, onArray vertices: [Vertex]) -> Bool {
-        for i in 0..<vertices.count {
-            if vertices[i].id == v.id  {
-                return true;
-            }
-        }
-        return false
-    }
-    
-    func bringVertexToFront(v: Vertex, vertices: [Vertex]) -> [Vertex] {
-        var vertexArray = vertices
-        let index  = vertices.indexOf({$0.id == v.id})
-        vertexArray.removeAtIndex(index!)
-        vertexArray.insert(v, atIndex: 0)
-        return vertexArray
-    }
-
-}
-
-extension Graph: Operationable {
 }

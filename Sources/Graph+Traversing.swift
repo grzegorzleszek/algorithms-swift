@@ -32,18 +32,18 @@ extension Graph: Traversing {
     /// 1.  Initialize: open=[Start]; closed=[]
     /// 2.  while open ≠ [] do
     /// 3.  begin
-    /// 4. 	 remove the left most from open, call it X;
-    /// 5.	 if X is a goal then return(success);
-    /// 6.	 generate all children of X;
-    /// 7.	 put X on closed;
-    /// 8.	 eliminate any children of X already on either open or closed, as these will cause loops in the search;
-    /// 9.	 put the remaining descendants, in order of discovery, on the right end of open;
+    /// 4.    remove the left most from open, call it X;
+    /// 5.    if X is a goal then return(success);
+    /// 6.    generate all children of X;
+    /// 7.    put X on closed;
+    /// 8.    eliminate any children of X already on either open or closed, as these will cause loops in the search;
+    /// 9.    put the remaining descendants, in order of discovery, on the right end of open;
     /// 10. end.
     ///
     /// - Note: If goal is not specified, bfs will return full search path.
     /// - Complexity: O(|V|+|E|), where |V| is number of vertices and |E| is number of edges.
     /// - Returns: Search path to goal or nil if did not reached goal.
-    func bfs(start start: Vertex, goal: Vertex? = nil, graph: Graph) -> [Vertex]? {
+    func bfs(start: Vertex, goal: Vertex? = nil, graph: Graph) -> [Vertex]? {
         guard graph._vertices.count > 0
             else { return nil }
         var open = [Vertex]()
@@ -67,7 +67,54 @@ extension Graph: Traversing {
             for v in closed {
                 children = children.filter({$0.id != v.id})
             }
-            open.appendContentsOf(children)
+            open.append(contentsOf: children)
+        }
+        if let _ = goal {
+            return nil
+        }
+        return closed
+    }
+
+    /// Deapth-first search.
+    /// 1.  Initialize: open=[Start]; closed=[]
+    /// 2.  while open ≠ [] do
+    /// 3.  begin
+    /// 4. 	  remove the left most from open, call it X;
+    /// 5.	  if X is a goal then return(success);
+    /// 6.	  generate all children of X;
+    /// 7.	  put X on closed;
+    /// 8.	  eliminate any children of X already on either open or closed, as these will cause loops in the search;
+    /// 9.	put the remaining descendants, in order of discovery, on the left begining of open;
+    /// 10.end.
+    ///
+    /// - Note: If goal is not specified, dfs will return full search path.
+    /// - Complexity: O(|V|+|E|), where |V| is number of vertices and |E| is number of edges.
+    /// - Returns: Search path to goal or nil if did not reached goal.
+    func dfs(start: Vertex, goal: Vertex? = nil, graph: Graph) -> [Vertex]? {
+        guard graph._vertices.count > 0
+            else { return nil }
+        var open = [Vertex]()
+        var closed = [Vertex]()
+        let vertexArray = bringVertexToFront(start, vertices: graph._vertices)
+        open.append(vertexArray.first!)
+        while open.count != 0 {
+            let x = open.first!
+            open.removeFirst()
+            if let goal = goal {
+                if x == goal {
+                    closed.append(x)
+                    return closed
+                }
+            }
+            var children = neighborsOf(x, withGiven: graph._edges)
+            closed.append(x)
+            for v in open {
+                children = children.filter({$0.id != v.id})
+            }
+            for v in closed {
+                children = children.filter({$0.id != v.id})
+            }
+            open.insert(contentsOf: children, at: 0)
         }
         if let _ = goal {
             return nil
