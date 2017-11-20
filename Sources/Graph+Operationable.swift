@@ -23,10 +23,7 @@
 
 import Foundation
 
-protocol Operationable {
-}
-
-extension Operationable {
+extension Graph {
     
     func neighborsOf(_ v: Vertex, withGiven edges: [Edge]) -> [Vertex] {
         var result = [Vertex]()
@@ -57,7 +54,4 @@ extension Operationable {
         return vertexArray
     }
 
-}
-
-extension Graph: Operationable {
 }

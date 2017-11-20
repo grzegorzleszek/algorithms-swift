@@ -23,10 +23,7 @@
 
 import Foundation
 
-protocol Traversing {
-}
-
-extension Graph: Traversing {
+extension Graph {
     /// Breadth-first search.
     ///
     /// 1.  Initialize: open=[Start]; closed=[]
