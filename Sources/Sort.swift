@@ -67,3 +67,64 @@ private func merge(_ left: [Int], _ right: [Int]) -> [Int] {
     }
     return result
 }
+
+func quickSort(_ A: inout [Int], _ lo: Int, _ hi: Int) {
+    if lo < hi {
+        let p = partition(&A, lo, hi)
+        quickSort(&A, lo, p - 1 )
+        quickSort(&A, p + 1, hi)
+    }
+}
+
+private func partition(_ A: inout [Int], _ lo: Int, _ hi: Int) -> Int {
+    let pivot = A[hi]
+    var i = lo - 1
+    (lo...(hi - 1)).forEach {
+        let j = $0
+        if A[j] < pivot {
+            i = i + 1
+            A.swapAt(i, j)
+        }
+    }
+    if A[hi] < A[i + 1] {
+        A.swapAt(i + 1, hi)
+    }
+    return i + 1
+}
+
+func bucketSort(_ arr: inout [Int], _ n: Int) {
+    var b = [[Int]](repeatElement([Int](), count: n))
+    (0..<n).forEach { i in
+        let bi = msbits(arr[i], n)
+        b[bi].append(arr[i])
+    }
+    
+    (0..<n).forEach { i in
+        insertionSort(&b[i])
+    }
+    
+    var index = 0
+    (0..<n).forEach {
+        let i = $0
+        (0..<b[i].count).forEach { j in
+            arr[index] = b[i][j];
+            index += 1
+        }
+    }
+}
+
+private func msbits(_ x: Int, _ k: Int) -> Int {
+    return min(abs(x), k - 1)
+}
+
+func insertionSort(_ A: inout [Int]) {
+    var i = 1
+    while i < A.count {
+        var j = i
+        while j > 0 && A[j-1] > A[j] {
+            A.swapAt(j, j-1)
+            j = j - 1
+        }
+        i = i + 1
+    }
+}

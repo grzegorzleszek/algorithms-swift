@@ -21,7 +21,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-
 import XCTest
 @testable import algorithms
 class SortTest: XCTestCase {
@@ -29,78 +28,96 @@ class SortTest: XCTestCase {
     func test_singleElement() {
         let input = [1]
         let expectations = [1]
-        let output = mergeSort(elements: input)
-        XCTAssertEqual(output, expectations)
+        XCTAssertEqual(mergeSortOutput(input: input), expectations)
+        XCTAssertEqual(quickSortOutput(input: input), expectations)
+        XCTAssertEqual(bucketSortOutput(input: input), expectations)
     }
 
     func test_twoElementsSorted() {
         let input = [1, 2]
         let expectations = [1, 2]
-        let output = mergeSort(elements: input)
-        XCTAssertEqual(output, expectations)
+        XCTAssertEqual(mergeSortOutput(input: input), expectations)
+        XCTAssertEqual(quickSortOutput(input: input), expectations)
+        XCTAssertEqual(bucketSortOutput(input: input), expectations)
     }
 
     func test_twoElementsReverted() {
         let input = [2, 1]
         let expectations = [1, 2]
-        let output = mergeSort(elements: input)
-        XCTAssertEqual(output, expectations)
+        XCTAssertEqual(mergeSortOutput(input: input), expectations)
+        XCTAssertEqual(quickSortOutput(input: input), expectations)
+        XCTAssertEqual(bucketSortOutput(input: input), expectations)
     }
 
     func test_threeElements123() {
         let input = [1, 2, 3]
         let expectations = [1, 2, 3]
-        let output = mergeSort(elements: input)
-        XCTAssertEqual(output, expectations)
+        XCTAssertEqual(mergeSortOutput(input: input), expectations)
+        XCTAssertEqual(quickSortOutput(input: input), expectations)
+        XCTAssertEqual(bucketSortOutput(input: input), expectations)
     }
 
     func test_threeElements132() {
         let input = [1, 3, 2]
         let expectations = [1, 2, 3]
-        let output = mergeSort(elements: input)
-        XCTAssertEqual(output, expectations)
+        XCTAssertEqual(mergeSortOutput(input: input), expectations)
+        XCTAssertEqual(quickSortOutput(input: input), expectations)
+        XCTAssertEqual(bucketSortOutput(input: input), expectations)
     }
 
     func test_threeElements213() {
         let input = [2, 1, 3]
         let expectations = [1, 2, 3]
-        let output = mergeSort(elements: input)
-        XCTAssertEqual(output, expectations)
+        XCTAssertEqual(mergeSortOutput(input: input), expectations)
+        XCTAssertEqual(quickSortOutput(input: input), expectations)
+        XCTAssertEqual(bucketSortOutput(input: input), expectations)
     }
 
     func test_threeElements231() {
         let input = [2, 3, 1]
         let expectations = [1, 2, 3]
-        let output = mergeSort(elements: input)
-        XCTAssertEqual(output, expectations)
+        XCTAssertEqual(mergeSortOutput(input: input), expectations)
+        XCTAssertEqual(quickSortOutput(input: input), expectations)
+        XCTAssertEqual(bucketSortOutput(input: input), expectations)
     }
 
     func test_threeElements312() {
         let input = [3, 1, 2]
         let expectations = [1, 2, 3]
-        let output = mergeSort(elements: input)
-        XCTAssertEqual(output, expectations)
+        XCTAssertEqual(mergeSortOutput(input: input), expectations)
+        XCTAssertEqual(quickSortOutput(input: input), expectations)
+        XCTAssertEqual(bucketSortOutput(input: input), expectations)
     }
 
     func test_threeElements321() {
         let input = [3, 2, 1]
         let expectations = [1, 2, 3]
-        let output = mergeSort(elements: input)
-        XCTAssertEqual(output, expectations)
+        XCTAssertEqual(mergeSortOutput(input: input), expectations)
+        XCTAssertEqual(quickSortOutput(input: input), expectations)
+        XCTAssertEqual(bucketSortOutput(input: input), expectations)
     }
 
     func test_tenElements() {
         let input = [1, 6, 3, 4, 2, 7, 5, 0, 8, 9]
         let expectations = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-        let output = mergeSort(elements: input)
-        XCTAssertEqual(output, expectations)
+        XCTAssertEqual(mergeSortOutput(input: input), expectations)
+        XCTAssertEqual(quickSortOutput(input: input), expectations)
+        XCTAssertEqual(bucketSortOutput(input: input), expectations)
     }
-
-    func test_negativeValues() {
-        let input = [1, -1, 0, 2, -2]
-        let expectations = [-2, -1, 0, 1, 2]
-        let output = mergeSort(elements: input)
-        XCTAssertEqual(output, expectations)
+    
+    private func mergeSortOutput(input: [Int]) -> [Int] {
+        return mergeSort(elements: input)
     }
-
+    
+    private func quickSortOutput(input: [Int]) -> [Int] {
+        var arr = input
+        quickSort(&arr, 0, arr.count - 1)
+        return arr
+    }
+    
+    private func bucketSortOutput(input: [Int]) -> [Int] {
+        var arr = input
+        bucketSort(&arr, arr.count)
+        return arr
+    }
 }
