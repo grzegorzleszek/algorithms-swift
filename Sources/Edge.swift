@@ -25,11 +25,13 @@ import Foundation
 
 struct Edge {
     let id: Int
-    var left: Vertex
-    var right: Vertex
-    init(id: Int, left: Vertex, right: Vertex) {
+    let left: Vertex
+    let right: Vertex
+    let weight: Int
+    init(id: Int, left: Vertex, right: Vertex, weight: Int = 0) {
         self.id = id
         self.left = left
         self.right = right
+        self.weight = weight
     }
 }

@@ -29,9 +29,7 @@ func ==(l: Vertex, r: Vertex) -> Bool {
 
 struct Vertex {
     let id: Int
-    var weight: Int
-    init(id _id:Int) {
+    init(id _id: Int) {
         self.id = _id
-        self.weight = 0
     }
 }

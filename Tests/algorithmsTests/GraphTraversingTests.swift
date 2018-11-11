@@ -24,7 +24,7 @@
 import XCTest
 @testable import algorithms
 
-class GraphTraversingTestsTests: XCTestCase {
+class GraphTraversingTests: XCTestCase {
     
     var graph: Graph!
     
