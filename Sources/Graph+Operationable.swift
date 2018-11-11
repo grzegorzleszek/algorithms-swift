@@ -54,4 +54,14 @@ extension Graph {
         return vertexArray
     }
 
+    func findEdge(_ x: Vertex, _ y: Vertex) -> Edge? {
+        for i in 0..<_edges.count {
+            if (_edges[i].left.id == x.id && _edges[i].right.id == y.id)
+            || (_edges[i].left.id == y.id && _edges[i].right.id == x.id) {
+                return _edges[i]
+            }
+        }
+        return nil
+    }
+
 }
